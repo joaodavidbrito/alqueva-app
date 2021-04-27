@@ -1,0 +1,29 @@
+stages:
+  - deploy
+
+deploy_prod:
+  stage: deploy
+  script:
+    - echo "Starting the deploy to the server"
+    - echo "shutting down current existing containers"
+    - docker-compose down
+    - echo "git checkout"
+    - latesttag=$(git describe --tags)
+    - git checkout ${latesttag}
+    - echo "Building the images"
+    - docker build -t joao/alqueva:latest -f ./app/Dockerfile.app ./app
+    - docker build -t joao/alqueva_worker:latest -f ./worker/Dockerfile.worker ./worker
+    - echo "running up the containers..."
+    - docker-compose up -d
+    - echo "Cleaning the system"
+    - docker image prune -f
+    - docker volume prune -f
+    - docker system prune -af
+    - echo "Process finished!"
+  environment:
+    name: production
+    url: https://alqueva.joaobrito.pt:8080
+  tags:
+    - prod
+  only:
+  - tags

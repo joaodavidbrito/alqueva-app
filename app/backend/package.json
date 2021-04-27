@@ -1,0 +1,26 @@
+{
+    "name": "nodejs",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon server.js -e html,js",
+        "debug": "nodemon --inspect server.js -e html,js",
+        "client": "cd ../frontend && yarn start",
+        "server": "node server.js",
+        "dev": "concurrently --kill-others-on-fail \"yarn debug\" \"yarn client\""
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.21.1",
+        "bluebird": "^3.7.2",
+        "express": "^4.17.1",
+        "moment": "^2.29.1",
+        "redis": "^3.0.2"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.7",
+        "concurrently": "^4.0.1"
+    }
+}

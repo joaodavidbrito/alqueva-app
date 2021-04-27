@@ -1,0 +1,16 @@
+FROM node:12.20.2-alpine3.12
+
+ENV NODE_ENV=production
+ENV PATH /usr/src/app/frontend/node_modules/.bin:$PATH
+ENV PATH /usr/src/app/backend/node_modules/.bin:$PATH
+
+# Create app directory
+WORKDIR /usr/src/app
+RUN mkdir worker
+WORKDIR /usr/src/app/worker
+
+COPY ./package.*json ./
+RUN npm install --only=prod --silent
+COPY ./server.js ./
+
+ENTRYPOINT ["node", "server.js"]
