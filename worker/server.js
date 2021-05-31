@@ -17,7 +17,7 @@ const database_url = process.env.DATABASE_URL
 const token = process.env.INFLUXDB_TOKEN
 const org = process.env.INFLUXDB_ORG
 const bucket = process.env.INFLUXDB_BUCKET
-const fistUrl = process.env.FIRST_URL
+const firstUrl = process.env.FIRST_URL
 const secondUrl = process.env.SECOND_URL
 
 console.log('database url:', database_url)
@@ -72,7 +72,7 @@ const parseHtml = (html) => {
 
 const fetchSite = async ({startDate = '08/02/2002', endDate = moment().format('DD/MM/YYYY')} = {}) => {
 
-    let response = await axios.get(fistUrl, options.headers.cookie ? options : undefined)
+    let response = await axios.get(firstUrl, options.headers.cookie ? options : undefined)
     if(response.headers['set-cookie']){
         options.headers.cookie = response.headers['set-cookie'][0].split(';')[0]
         console.log('cookie:', options.headers.cookie)
@@ -143,7 +143,7 @@ const task = async () => {
 # * * * * * *
 */
 cron.schedule('* */4 * * *', task)
-// task()
+task()
 
 // create the server and listen on the specified port
 app.listen(port, () => {

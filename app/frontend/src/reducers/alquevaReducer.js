@@ -3,12 +3,14 @@ import moment from 'moment'
 const alquevaReducer = (state, action) => {
     if(action.type === 'SET_START_DATE' || action.type === 'SET_END_DATE') {
         if(!validateDates(state, action)) {
-            return {
+            return action.type === 'SET_START_DATE' ? {
                 ...state,
-                startDate: action.startDate ? action.startDate : state.startDate,
-                toggle_start: action.startDate ? '15y' : state.toggle_start,
-                endDate: action.endDate ? action.endDate : state.endDate,
-                toggle_end: action.endDate ? '0m' : state.toggle_end
+                startDate: action.startDate,
+                toggle_start: '15y',
+            } : {
+                ...state,
+                endDate: action.endDate,
+                toggle_end: '0m'
             }
         }
     }
