@@ -5,6 +5,8 @@ deploy_prod:
   stage: deploy
   script:
     - echo "Starting the deploy to the server"
+    - echo "creating the .env file inside the root project folder..."
+    - cp $DOTENV $CI_PROJECT_DIR/.env
     - echo "shutting down current existing containers"
     - docker-compose down
     - echo "git checkout"
@@ -13,6 +15,7 @@ deploy_prod:
     - echo "Building the images"
     - docker build -t joao/alqueva:latest -f ./app/Dockerfile.app ./app
     - docker build -t joao/alqueva_worker:latest -f ./worker/Dockerfile.worker ./worker
+    - docker-compose config
     - echo "running up the containers..."
     - docker-compose up -d
     - echo "Cleaning the system"

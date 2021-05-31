@@ -32,7 +32,8 @@ const initState = {
     },
     startDate: moment().subtract(3, "months").toDate(),
     endDate: moment().toDate(),
-    toggle: '3m'
+    toggle_start: '3m',
+    toggle_end: '0m'
 }
 
 cron.schedule('*/30 * * * *', () => {
@@ -125,7 +126,7 @@ const AlquevaApp = () => {
         </Row>
         <Row>
           <Col>
-            <h5>Ver histórico a...</h5>
+            <h5>Ver cotas entre...</h5>
             <SelectDates />
           </Col>
         </Row>
